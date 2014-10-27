@@ -14,24 +14,24 @@ int main (int argc, char* argv[]) {
   ofstream out(argv[2], ios::out|ios::binary);
 
   if (in.is_open() && out.is_open()) {
-    size_r = file.tellg(); // this is the full size
+    size_r = in.tellg(); // this is the full size
     size = size_r / divider;
     memblock = new char [size];
-    file.seekg (0, ios::beg);
+    in.seekg (0, ios::beg);
     //(size_r - (size_r % divider) ) / divider
     for (int i = 0; i < divider; ++i){
       cout << "Reading " << size << " pieces to memory" << endl;
-      file.read (memblock, size);
+      in.read (memblock, size);
       cout << "Writing " << size << " pieces to file" << endl;
       out.write(memblock, size);
       cout << "-------------------------------------" << endl;
     }
     cout << "Whats left here? " << size_r % divider << " pieces of data. Lets copy those too..." << endl;
     cout << "Reading " << size_r % divider << endl;
-    file.read (memblock, size_r % divider);
+    in.read (memblock, size_r % divider);
     cout << "Writing " << size_r % divider << endl;
     out.write(memblock, size_r%divider);
-    file.close();
+    in.close();
     out.close();
     cout << "Ready!" << endl;
     delete[] memblock;
